@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @CrossOrigin
 public class HumidityController {
@@ -19,6 +21,7 @@ public class HumidityController {
 
     @PostMapping(path = "/saveHumidity",  consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public HumidityDTO saveHumidity(@RequestBody HumidityDTO humidityDTO){
+        humidityDTO.setId(UUID.randomUUID());
         Humidity humidity = humidityMapper.dtoToEntity(humidityDTO);
         humidity = humidityRepository.save(humidity);
         return humidityMapper.entityToDto(humidity);

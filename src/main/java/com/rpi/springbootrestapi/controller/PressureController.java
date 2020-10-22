@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @CrossOrigin
 public class PressureController {
@@ -20,6 +22,7 @@ public class PressureController {
 
     @PostMapping(path = "/savePressure",  consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public PressureDTO savePressure(@RequestBody PressureDTO pressureDTO){
+        pressureDTO.setId(UUID.randomUUID());
         Pressure pressure = pressureMapper.dtoToEntity(pressureDTO);
         pressure = pressureRepository.save(pressure);
         return pressureMapper.entityToDto(pressure);
